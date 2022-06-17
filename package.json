@@ -4,10 +4,14 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "dev": "npx office-addin-debugging start jabref/manifest.xml"
   },
   "dependencies": {
     "core-js": "^3.8.3",
+    "element-ui": "^2.15.9",
+    "office-addin-debugging": "^4.3.14",
+    "office-addin-dev-settings": "^1.11.4",
     "vue": "^2.6.14",
     "vue-router": "^3.5.1",
     "vuex": "^3.6.2"
