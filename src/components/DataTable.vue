@@ -1,41 +1,49 @@
 <template>
   <div>
-    <el-input
-        v-model="search"
+    <el-container style="height: 100%">
+      <el-header>
+        <el-input
 
-        placeholder="输入关键字搜索"
-        style="margin: 15px 0px"
-    />
-    <el-table
-        ref="multipleTable"
-        :data="tableData"
-        tooltip-effect="dark"
-        style="width: 100%"
-        @selection-change="handleSelectionChange"
-        border
-    >
-      <el-table-column
-          type="selection"
-          width="55">
-      </el-table-column>
-      <el-table-column
-          label="日期"
-          width="120">
-        <template slot-scope="scope">{{ scope.row.date }}</template>
-      </el-table-column>
-      <el-table-column
-          prop="author"
-          label="作者"
-          width="120"
-          show-overflow-tooltip
-      >
-      </el-table-column>
-      <el-table-column
-          prop="title"
-          label="题目"
-          show-overflow-tooltip>
-      </el-table-column>
-    </el-table>
+            placeholder="输入关键字搜索"
+            style="margin: 15px 0px"
+        />
+      </el-header>
+      <el-main>
+        <el-table
+            ref="multipleTable"
+            :data="tableData"
+            tooltip-effect="dark"
+            style="width: 100%"
+            @selection-change="handleSelectionChange"
+            border
+        >
+          <el-table-column
+              type="selection"
+              width="55">
+          </el-table-column>
+          <el-table-column
+              label="日期"
+              width="120">
+            <template slot-scope="scope">{{ scope.row.date }}</template>
+          </el-table-column>
+          <el-table-column
+              prop="author"
+              label="作者"
+              width="120"
+              show-overflow-tooltip
+          >
+          </el-table-column>
+          <el-table-column
+              prop="title"
+              label="题目"
+              show-overflow-tooltip>
+          </el-table-column>
+        </el-table>
+      </el-main>
+
+    </el-container>
+
+
 
   </div>
 

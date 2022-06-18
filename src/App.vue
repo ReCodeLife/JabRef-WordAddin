@@ -1,17 +1,28 @@
 <template>
   <div id="app" style="height: 100%;">
     <el-container style="height: 100%;">
-      <el-header>Citation</el-header>
-      <el-main>
-        <DataTable/>
+      <el-header>
+        <el-tabs v-model="activeName">
+          <el-tab-pane label="Citation" name="citation"></el-tab-pane>
+          <el-tab-pane label="Style" name="style"></el-tab-pane>
+        </el-tabs>
+      </el-header>
+      <el-main style="padding-top: 0">
+
+        <DataTable v-if="activeName==='citation'"/>
+        <CitationStyle v-else-if="activeName==='style'" />
+
 
       </el-main>
       <el-footer >
-        <div >
+        <div v-if="activeName==='citation'">
           <el-button type="primary" plain >Add Citation</el-button>
           <el-button type="primary" plain>refresh</el-button>
           <el-button type="primary" plain>Add Bibliography</el-button>
           <el-button type="primary" plain>Select bib file</el-button>
+        </div>
+        <div v-else>
+          <el-button type="primary" plain >get more style</el-button>
         </div>
 
       </el-footer>
@@ -21,9 +32,15 @@
 
 <script>
 import DataTable from "@/components/DataTable";
+import CitationStyle from "@/components/CitationStyle";
 export default {
   name: 'App',
-  components:{DataTable},
+  components:{DataTable,CitationStyle},
+  data(){
+    return{
+      activeName:"citation"
+    }
+  },
   methods: {
     // onSetColor() {
     //   window.Word.run(async context => {
@@ -39,10 +56,11 @@ export default {
 <style>
 
 .el-header, .el-footer {
-  background-color: #2B579A;
-  color: #FFF;
   text-align: center;
-  line-height: 60px;
+
+}
+.el-header > .el-tabs--top >.el-tabs__header {
+  margin: 0;
 }
 
 .el-aside {
@@ -66,12 +84,5 @@ html,body{
   margin: 0;
 }
 
-.el-container:nth-child(5) .el-aside,
-.el-container:nth-child(6) .el-aside {
-  line-height: 260px;
-}
 
-.el-container:nth-child(7) .el-aside {
-  line-height: 320px;
-}
 </style>
