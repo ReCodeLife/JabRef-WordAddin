@@ -23,15 +23,19 @@
           </el-table-column>
           <el-table-column
               label="日期"
-              width="120">
-            <template slot-scope="scope">{{ scope.row.date }}</template>
+              width="120"
+               
+              >
+            <template slot-scope="scope">{{ scope.row.issued?scope.row.issued['date-parts'][0][0] : "" }}</template>
+           
           </el-table-column>
           <el-table-column
-              prop="author"
+              
               label="作者"
               width="120"
               show-overflow-tooltip
           >
+          <template slot-scope="scope">{{ authorToString(scope.row.author) }}</template>
           </el-table-column>
           <el-table-column
               prop="title"
@@ -53,78 +57,86 @@
 <script>
 export default {
   name: "DataTable",
+  props: {
+    tableData: {
+      default: () => {
+        return [];
+      },
+    },
+    //loading: {default:false},
+  },
   data() {
 
     return {
-      tableData: [{
-        date: '2016-05-03',
-        author: '王小虎xxxxxxxxx',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-02',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-08',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-06',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-07',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-08',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-06',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-07',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-04',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-01',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-08',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-06',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }, {
-        date: '2016-05-07',
-        author: '王小虎',
-        title: '上海市普陀区金沙江路 1518 弄'
-      }],
+      // tableData: [{
+      //   date: '2016-05-03',
+      //   author: '王小虎xxxxxxxxx',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-02',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-04',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-01',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-08',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-06',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-07',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-04',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-01',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-08',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-06',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-07',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-04',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-01',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-08',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-06',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }, {
+      //   date: '2016-05-07',
+      //   author: '王小虎',
+      //   title: '上海市普陀区金沙江路 1518 弄'
+      // }],
       multipleSelection: []
     }
   },
@@ -141,7 +153,15 @@ export default {
     },
     handleSelectionChange(val) {
       this.multipleSelection = val;
-    }
+    },
+    authorToString(authors){
+      //var s="";
+      //console.log(authors)
+      const a=authors.map((author)=>author.family+author.given)
+      return a.join();
+    },
+    
+
   }
 }
 </script>
